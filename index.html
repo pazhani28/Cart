@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Berkeley Bowl</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+      padding: 20px;
+    }
+
+    .product {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .product img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    button,
+    .cart-button {
+      display: inline-block;
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .cart-button {
+      position: relative;
+    }
+
+    .badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background-color: red;
+      color: white;
+      font-size: 12px;
+      padding: 3px 6px;
+      border-radius: 50%;
+    }
+
+    #snackbar {
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
+      background-color: green;
+      color: #fff;
+      text-align: center;
+      border-radius: 2px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1;
+      right: 30px;
+      top: 30px;
+      font-size: 17px;
+      transform: translateX(100%);
+      /* Add the transform property for initial positioning */
+      transition: transform 0.5s ease-in-out;
+    }
+
+    #snackbar.show {
+      visibility: visible;
+      transform: translateX(0);
+      /* Move the snackbar to the left */
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeout {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>
+      <span>
+        <i class="fas fa-shopping-cart fa-2x "></i>
+      </span>
+      Berkeley Bowl
+    </h1>
+    <a href="cart.html" class="cart-button" id="cart-link">Cart <span id="cart-count" class="badge">0</span></a>
+    <a href="login.html" class="cart-button" style="float: right" id="logoutLink">Logout</a>
+  </header>
+
+  <div class="product-grid">
+    <div class="product">
+      <img
+        src="https://plus.unsplash.com/premium_photo-1666920429649-7562049bb713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8eW9ndXJ0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+        alt="Product 1" />
+      <h2>Yogurt</h2>
+      <p>$10</p>
+      <button onclick="addToCart('Yogurt', 10)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img
+        src="https://plus.unsplash.com/premium_photo-1675365835662-3980c9fdbbc3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YnJvY2NvbGl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+        alt="Product 2" />
+      <h2>Broccoli</h2>
+      <p>$15</p>
+      <button onclick="addToCart('Broccoli', 15)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img
+        src="https://images.unsplash.com/photo-1526364163643-89e30b8fcb70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbmFuYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        alt="Product 3" />
+      <h2>Banana</h2>
+      <p>$20</p>
+      <button onclick="addToCart('Banana', 20)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img
+        src="https://images.unsplash.com/photo-1603048297172-c92544798d5a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YmVlZnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        alt="Product 4" />
+      <h2>Beef</h2>
+      <p>$20</p>
+      <button onclick="addToCart('Beef', 20)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img
+        src="https://images.unsplash.com/photo-1634467524884-897d0af5e104?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29ybnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        alt="Product 5" />
+      <h2>Corn</h2>
+      <p>$20</p>
+      <button onclick="addToCart('Corn', 20)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img
+        src="https://images.unsplash.com/photo-1586802990181-a5771596eaea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGVnZ3N8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+        alt="Product 6" />
+      <h2>Egg</h2>
+      <p>$20</p>
+      <button onclick="addToCart('Eggs', 20)">Add to Cart</button>
+    </div>
+    <!-- Add more product divs as needed -->
+  </div>
+  <!-- <button onclick="myFunction()">Show Snackbar</button> -->
+  <!-- <div id="snackbar">Some text some message..</div> -->
+  <p style="
+        text-align: center;
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+      ">
+    Berkeley Bowl Marketplace<br />
+    2020 Oregon St. Berkeley, CA, 94703<br />
+    (510) 843-6929
+  </p>
+  <script>
+    let cartCount = 0;
+    let cartTotal = 0;
+
+    sessionStorage.clear();
+    function addToCart(productName, price) {
+      if (productName === "Yogurt") {
+        let countP1 = sessionStorage.getItem("countP1");
+        countP1 = countP1 ? parseInt(countP1) + 1 : 1;
+        Toaster("Yogurt");
+        sessionStorage.setItem("countP1", countP1);
+      }
+
+      if (productName === "Broccoli") {
+        let countP2 = sessionStorage.getItem("countP2");
+        countP2 = countP2 ? parseInt(countP2) + 1 : 1;
+        Toaster("Broccoli");
+        sessionStorage.setItem("countP2", countP2);
+      }
+
+      if (productName === "Banana") {
+        let countP3 = sessionStorage.getItem("countP3");
+        countP3 = countP3 ? parseInt(countP3) + 1 : 1;
+        Toaster("Banana");
+        sessionStorage.setItem("countP3", countP3);
+      }
+      if (productName === "Beef") {
+        let countP4 = sessionStorage.getItem("countP4");
+        countP4 = countP4 ? parseInt(countP4) + 1 : 1;
+        Toaster("Beef");
+        sessionStorage.setItem("countP4", countP4);
+      }
+
+      if (productName === "Corn") {
+        let countP5 = sessionStorage.getItem("countP5");
+        countP5 = countP5 ? parseInt(countP5) + 1 : 1;
+        Toaster("Corn");
+        sessionStorage.setItem("countP5", countP5);
+      }
+
+      if (productName === "Eggs") {
+        let countP6 = sessionStorage.getItem("countP6");
+        countP6 = countP6 ? parseInt(countP6) + 1 : 1;
+        Toaster("Eggs");
+        sessionStorage.setItem("countP6", countP6);
+      }
+
+      cartCount++;
+      cartTotal += price;
+      updateCartCount();
+      // alert("Product " + productName + " has been saved to the cart!");
+      sessionStorage.setItem("cartCount", cartCount);
+      sessionStorage.setItem("cartTotal", cartTotal);
+    }
+
+    function updateCartCount() {
+      const cartCountElement = document.getElementById("cart-count");
+      cartCountElement.textContent = cartCount;
+    }
+    // Logout link click event
+    document
+      .getElementById("logoutLink")
+      .addEventListener("click", function () {
+        // Clear local storage
+        localStorage.clear();
+
+        // Redirect to the login page
+        window.location.href = "login.html";
+      });
+
+    // Get the message from the URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get('message');
+
+    if (message) {
+      Toaster(message);
+    }
+
+
+    function Toaster(item) {
+      var snackbar = document.createElement("div");
+      snackbar.id = "snackbar";
+      snackbar.textContent = item === "Login Successful" ? item : item + " added to cart successfully!"
+      document.body.appendChild(snackbar);
+
+      var x = document.getElementById("snackbar");
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+        document.body.removeChild(snackbar);
+      }, 1000);
+    }
+
+  </script>
+</body>
+
+</html>
